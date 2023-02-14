@@ -1,0 +1,19 @@
+<%- include('./partial/header', {nav:nav}) %>
+<h2>About</h2>
+<dl>
+  <dt>Name</dt>
+  <dd><%= name %></dd>
+  <dt>Country</dt>
+  <dd><%= country %></dd>
+  <dt>Gender</dt>
+  <dd><%= gender %></dd>
+  <dt>Favorites Courses</dt>
+  <dd>
+    <ul>
+      <% courses.forEach(function(course){ %>
+      <li><%= course %></li>
+      <% }); %>
+    </ul>
+  </dd>
+</dl>
+<%- include('./partial/footer') %>

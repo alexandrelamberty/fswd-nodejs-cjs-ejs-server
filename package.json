@@ -1,0 +1,27 @@
+{
+  "name": "node-cjs-server",
+  "version": "0.0.1",
+  "description": "Node commonjs server application",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "start:dev": "node -r dotenv/config index.js dotenv_config_path=.env.dev dotenv_config_debug=true",
+    "watch:dev": "nodemon --exec \"npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodejs",
+    "application",
+    "demo",
+    "commonjs"
+  ],
+  "author": "Alexandre Lamberty",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8"
+  }
+}
