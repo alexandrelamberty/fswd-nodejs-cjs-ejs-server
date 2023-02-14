@@ -8,6 +8,7 @@ const ejs = require("ejs");
 const hostname = process.env.HOST;
 const port = process.env.PORT;
 
+// The global navigation links
 const nav = [
   {
     title: "Home",
@@ -23,22 +24,25 @@ const nav = [
   },
 ];
 
+//
 const routes = [
   {
-    path: "/",
-    view: "home",
-    name: "Home",
+    path: "/", // The path for the route
+    view: "home", // The ejs template to render
+    // The data to inject into the template
     data: {
-      nav: nav,
+      nav: nav, // :( need to inject the nav here to passe it the header partial
+      // that is included in every pages.
+      name: "Home", // The page title
       intro: "Welcome to my website.",
     },
   },
   {
     path: "/about",
     view: "about",
-    name: "About",
     data: {
       nav: nav,
+      title: "About",
       intro: "",
       name: "Alexandre Lamberty",
       gender: "male",
@@ -50,7 +54,6 @@ const routes = [
   {
     path: "/contact",
     view: "contact",
-    name: "Contact",
     data: {
       nav: nav,
     },
@@ -59,18 +62,25 @@ const routes = [
 
 const server = http.createServer(routeHandler);
 
+/**
+ * Handle the server requests.
+ * @param {*} req The http request
+ * @param {*} res The http response
+ * @returns void
+ */
 function routeHandler(req, res) {
-  console.log("Request.url: ", req.url);
+  // Extract only the path of the url
+  const requestUrl = url.parse(req.url).pathname;
 
-  const requestRoute = req.url.split("?")[0];
-
+  // Look for a corresponding route
   const route = routes.find((element) => {
-    return element.path === requestRoute;
+    return element.path === requestUrl;
   });
 
+  // If we have a match, we check the HTTP method and render the view or process
+  // the post data.
   if (route) {
     if (req.method === "GET") {
-      // Render the route
       render(res, route);
     } else if (req.method === "POST") {
       req.on("data", (form) => {
@@ -84,13 +94,9 @@ function routeHandler(req, res) {
       });
     }
   } else {
-    console.log("Request after: ", req.url);
-
+    // If we don't have a match for the route, we check if it is resource file.
     const requestUrl = url.parse(req.url).pathname;
     const filePublic = path.resolve("public" + requestUrl);
-
-    console.log("Resource: ", filePublic);
-
     if (fs.existsSync(filePublic)) {
       const file = fs.readFileSync(filePublic);
       const extension = path.extname(filePublic).replace(".", "");
@@ -108,12 +114,19 @@ function routeHandler(req, res) {
       res.end(file);
       return;
     } else {
-      // FIXME: bad design, extract ?
+      // Nothing to render so we throw a 404 by rendering nothing
       render(res, "null");
     }
   }
 }
 
+/**
+ * Render an html view corresponding to a route.
+ * It use the fs to check if the view exist and then use EJS the render the file.
+ * If the view doesn't exist it render a 404 page.
+ * @param {*} res The http response
+ * @param {*} route The route to render
+ */
 function render(res, route) {
   console.log("Render: ", route.view);
   fs.stat(`./views/${route.view}.ejs`, (err, stats) => {
@@ -148,6 +161,8 @@ function render(res, route) {
   });
 }
 
+// Start the server on the specified port and hostname.
+// See the .env file and the package.json scripts.
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });

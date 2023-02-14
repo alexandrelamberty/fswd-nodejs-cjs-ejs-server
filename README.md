@@ -1,6 +1,13 @@
 # Nodejs commonjs ejs server
 
-Only Nodejs and EJS application :zany_face:
+Pure Node.js with EJS templating engine :zany_face:
+
+The application require an environment file with theses variable:
+
+```properties
+PORT=3000
+HOST=localhost
+```
 
 Start the application
 
