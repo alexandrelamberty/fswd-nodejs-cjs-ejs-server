@@ -44,7 +44,7 @@ const routes = [
       gender: "male",
       country: "Belgium",
       birthdate: new Date("1983-08-10"),
-      courses: ["Philosophy", "Computer-sciences", "Human Behaviors"],
+      courses: ["Philosophy", "Computer science", "Biology"],
     },
   },
   {
@@ -77,8 +77,8 @@ function routeHandler(req, res) {
         console.log("Form data: ", form);
       });
       req.on("end", () => {
-        res.writeHead(200, {
-          "Content-type": "text/html",
+        res.writeHead(301, {
+          Location: "/",
         });
         res.end();
       });
@@ -107,6 +107,9 @@ function routeHandler(req, res) {
       });
       res.end(file);
       return;
+    } else {
+      // FIXME: bad design, extract ?
+      render(res, "null");
     }
   }
 }
@@ -114,17 +117,9 @@ function routeHandler(req, res) {
 function render(res, route) {
   console.log("Render: ", route.view);
   fs.stat(`./views/${route.view}.ejs`, (err, stats) => {
-    res.statusCode = 200;
     res.setHeader("Content-Type", "text/html");
     if (stats) {
-      /*
-      const template = fs.readFileSync(
-        "./views/" + route.view + ".ejs",
-        "utf-8"
-      );
-      const html = ejs.render(template, route.data);
-      res.end(html);
-      */
+      res.statusCode = 200;
       const filename = path.resolve("views", `${route.view}.ejs`);
       ejs.renderFile(filename, route.data, (err, render) => {
         if (err) {
@@ -138,11 +133,17 @@ function render(res, route) {
       });
     } else {
       res.statusCode = 404;
-      // Change to template view !!!
-      res.end("Sorry, page not found!");
-      const template = fs.readFileSync("./views/not-found.ejs", "utf-8");
-      const html = ejs.render(template);
-      res.end(html);
+      const filename = path.resolve("views", `not-found.ejs`);
+      ejs.renderFile(filename, { nav }, (err, render) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        res.writeHead(200, {
+          "Content-type": "text/html",
+        });
+        res.end(render);
+      });
     }
   });
 }

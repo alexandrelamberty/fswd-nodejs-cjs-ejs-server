@@ -6,7 +6,11 @@
   <dt>Country</dt>
   <dd><%= country %></dd>
   <dt>Gender</dt>
+  <% if(gender === 'male'){ %>
+  <dd class="red"><%= gender %></dd>
+  <% } else { %>
   <dd><%= gender %></dd>
+  <% } %>
   <dt>Favorites Courses</dt>
   <dd>
     <ul>
