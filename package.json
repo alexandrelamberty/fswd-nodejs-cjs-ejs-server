@@ -5,8 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node index.js",
-    "start:dev": "node -r dotenv/config index.js dotenv_config_path=.env dotenv_config_debug=true",
-    "watch:dev": "nodemon --exec \"npm start\"",
+    "start:env": "node -r dotenv/config index.js dotenv_config_path=.env dotenv_config_debug=true",
+    "start:dev": "nodemon --exec \"npm start\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

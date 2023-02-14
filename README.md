@@ -2,7 +2,7 @@
 
 Pure Node.js with EJS template engine :zany_face:
 
-The application require an environment file with theses variables:
+The application require an `.env` environment file with theses variables:
 
 ```properties
 PORT=3000
@@ -15,16 +15,16 @@ Start the application
 npm run start
 ```
 
-Start dev mode without the need of dotenv in the dependencies
+Start with the environment variables set up and without the need of dotenv in the dependencies
+
+```shell
+npm run start:env
+```
+
+Start the application in dev, watch mode
 
 ```shell
 npm run start:dev
-```
-
-Watch dev mode
-
-```shell
-npm run watch:dev
 ```
 
 # References
