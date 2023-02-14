@@ -23,7 +23,5 @@ npm run watch:dev
 # References
 
 - <https://nodejs.org/en/>
-
 - <https://www.npmjs.com/package/nodemon>
-
 - <https://ejs.co/>
