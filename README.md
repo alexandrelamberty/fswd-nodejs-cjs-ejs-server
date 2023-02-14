@@ -24,4 +24,5 @@ npm run watch:dev
 
 - <https://nodejs.org/en/>
 - <https://www.npmjs.com/package/nodemon>
+- <https://www.npmjs.com/package/dotenv>
 - <https://ejs.co/>
