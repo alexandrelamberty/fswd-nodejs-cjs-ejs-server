@@ -1,6 +1,6 @@
 # Nodejs commonjs ejs server
 
-Pure Node.js with EJS templating engine :zany_face:
+Pure Node.js with EJS template engine :zany_face:
 
 The application require an environment file with theses variable:
 
