@@ -2,7 +2,7 @@
 
 Pure Node.js with EJS template engine :zany_face:
 
-The application require an environment file with theses variable:
+The application require an environment file with theses variables:
 
 ```properties
 PORT=3000
