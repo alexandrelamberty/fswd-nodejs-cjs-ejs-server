@@ -44,6 +44,7 @@ const routes = [
       nav: nav,
       title: "About",
       intro: "",
+      picture: "images/6729065.jpeg",
       name: "Alexandre Lamberty",
       gender: "male",
       country: "Belgium",
