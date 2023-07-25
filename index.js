@@ -77,24 +77,8 @@ function routeHandler(req, res) {
     return element.path === requestUrl;
   });
 
-  // If we have a match, we check the HTTP method and render the view or process
-  // the post data.
-  if (route) {
-    if (req.method === "GET") {
-      render(res, route);
-    } else if (req.method === "POST") {
-      req.on("data", (form) => {
-        console.log("Form data: ", form);
-      });
-      req.on("end", () => {
-        res.writeHead(301, {
-          Location: "/",
-        });
-        res.end();
-      });
-    }
-  } else {
-    // If we don't have a match for the route, we check if it is resource file.
+  // If we don't have a match for the route, we check if it is resource file.
+  if (!route) {
     const requestUrl = url.parse(req.url).pathname;
     const filePublic = path.resolve("public" + requestUrl);
     if (fs.existsSync(filePublic)) {
@@ -115,8 +99,24 @@ function routeHandler(req, res) {
       return;
     } else {
       // Nothing to render so we throw a 404 by rendering nothing
-      render(res, "null");
+      render(res, { view: "not-found" });
     }
+  }
+
+  // If we have a match, we check the HTTP method and render the view or process
+  // the post data.
+  if (req.method === "GET") {
+    render(res, route);
+  } else if (req.method === "POST") {
+    req.on("data", (form) => {
+      console.log("Form data: ", form);
+    });
+    req.on("end", () => {
+      res.writeHead(301, {
+        Location: "/",
+      });
+      res.end();
+    });
   }
 }
 
